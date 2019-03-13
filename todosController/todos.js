@@ -40,6 +40,7 @@ class TodosController {
     let newTodo = new Todo({
       title,
       body,
+      order,
     });
     if (!title) {
       return res.status(400).send({
@@ -61,13 +62,14 @@ class TodosController {
   async updateTodo(req, res){
     const {id} = req.params;
     const data = req.body;
+    console.log(data.newTodo)
     if(!ObjectId.isValid(id) && !id.match(/^[a-fA-F0-9]{24}$/)){
       return res.status(404).send({
         success: 'false',
         message: 'todo does not exist',
       });
     }
-    if (!data.todo.title) {
+    if (!data.newTodo.title) {
       return res.status(400).send({
         success: 'false',
         message: 'title is required',
@@ -75,7 +77,7 @@ class TodosController {
     }
 
     try {
-      const updated = await Todo.findByIdAndUpdate(id, data.todo, {new:true});
+      const updated = await Todo.findByIdAndUpdate(id, data.newTodo, {new:true});
       return res.status(200).json(updated);
 
     } catch (error) {
