@@ -6,13 +6,13 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 4000;
 const publicDomain = process.env.PUBLIC_DOMAIN || 'http://localhost:3000'
 
-const config = require('./config/DB');
+const config = require('./config/db');
 
 const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB).then(
-  () => {console.log('Database is connected') },
+  () => {console.log(`Database is connected ${config.DB}`) },
   err => { console.log('Can not connect to the database'+ err)}
 );
 
